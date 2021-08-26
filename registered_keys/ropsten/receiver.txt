@@ -1,0 +1,5 @@
+This private key is for the access of RAZE-pETH account.It cannot be used to access any other Raze account.
+fc71E218fFF23fa5Da59bA02684e9393e84ff523
+
+pub key:
+0x0a6fe84c5635426d79461245ed197e601afabd5bc9be95d08d06fbd0bbbc2d73139f4d0a6027b9fbf2e6a7a77e3b8dd87ea6e6875c70ceb7a77c49e7c408861e
