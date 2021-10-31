@@ -51,12 +51,12 @@ const razeApp = {
   initContract: async function() {
       /* Ropsten Testnet contract addresses */
       //let razeETHabi = (await $.getJSON('RazeETH.json')).abi;
-      //razeApp.contracts.razeETHContract = new razeApp.web3.eth.Contract(razeETHabi, '0x8DB0F612193D14A44c71bc58d3d89064a7545ebE');
+      //razeApp.contracts.razeETHContract = new razeApp.web3.eth.Contract(razeETHabi, '0xd615f8E6e819AdBF7CC17001a4F7f838C829A5a0');
       //razeApp.contracts.razeETHContract.setProvider(razeApp.web3Provider);
 
       /* Bsc testnet contract address */
       let razeETHabi = (await $.getJSON('RazeETH.json')).abi;
-      razeApp.contracts.razeETHContract = new razeApp.web3.eth.Contract(razeETHabi, '0x05149A02DC230588964Dd6D6F196eF38d523c0Fa');
+      razeApp.contracts.razeETHContract = new razeApp.web3.eth.Contract(razeETHabi, '0xd615f8E6e819AdBF7CC17001a4F7f838C829A5a0');
       razeApp.contracts.razeETHContract.setProvider(razeApp.web3Provider);
 
       let razeERC20abi = (await $.getJSON('RazeERC20.json')).abi;

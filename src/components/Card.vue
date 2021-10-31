@@ -32,21 +32,31 @@ export default {
   components: {},
   methods: {
       initClient: async function() {
-        this.$store.commit('setType', this.text)
+        if (!this.$raze.razeClient) {
+           try {
+               await this.initRazeClient();
+           } catch (error) {
+               this.$message('Connect wallet Error');
+               console.error(error);
+           }
+        }
+        this.$store.commit('setType', this.text);
         switch(this.text) {
-            case 'ETH': {
-                showLoading('init RazeETHClient...')
+            case 'BNB': {
+                showLoading('init RazeBNBClient...')
                 try {
-                    await this.$raze.initRazeEthClient()
+                    await this.$raze.initRazeEthClient();
                 } catch (error) {
-                    this.$message('something wrong')
+                    this.$message(error.message)
                     console.error(error)
                 }
                 hideLoading()
                 this.$router.push('/login')
                 break;
             }
-            
+            default: {
+                this.$message('Coming Soon!')
+            }
         }
       }
   }

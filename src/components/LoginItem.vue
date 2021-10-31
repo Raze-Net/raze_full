@@ -42,24 +42,40 @@ export default {
               this.$message('please input scret')
               return 
           }
-          showLoading('logining in...')
-          const res = await this.$raze.razeEthLogin(this.account)
-          if (res == 0) {
-              this.$message('login success')
-              try {
-                  const razeAddress = await this.$raze.razeEthAddress()
-                  this.$store.commit('setRazeAddress', razeAddress)
-              } catch (error) {
-                  this.$message('something wrong')
-                  console.error(error)
-              }
-              hideLoading()
-              this.$router.push('/process')
-          } else if (res == -1) {
-              this.$message({type: 'error', message: 'login failed: this raze account dose not exist'})
-              hideLoading()
-              return
+          if (!this.$raze.razeClient) {
+             this.$message("Your Local Client Connection Failed.Please Refresh The Page");
+             return; 
           }
+          showLoading('logining in...')
+          try {
+            const res = await this.$raze.razeEthLogin(this.account);
+            if (res == 0) {
+                this.$message('Login Successful')
+                try {
+                    const razeAddress = await this.$raze.razeEthAddress()
+                    this.$store.commit('setRazeAddress', razeAddress)
+                } catch (error) {
+                    if (error) {
+                        this.$message(error);
+                        hideLoading()
+                        return;
+                    }
+                    this.$message('Something Went Wrong.')
+                    console.error(error)
+                }
+                hideLoading()
+                this.$router.push('/process')
+            } else if (res == -1) {
+                this.$message({type: 'error', message: 'login failed: this raze account dose not exist'})
+                hideLoading()
+                return
+            }
+          } catch (error) {
+              this.$message(error);
+              hideLoading()
+              return;
+          }
+         
           
       }
   },

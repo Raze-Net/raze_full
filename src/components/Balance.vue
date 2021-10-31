@@ -2,7 +2,7 @@
   <ul class="balance">
     <li class="balance-middle-raze">
       <div class="balance-top">
-        Raze ETH Balance
+        Raze BNB Balance
       </div>
       <div class="balance-middle">
         <div class="balance-value">
@@ -14,12 +14,12 @@
         </div>
       </div>
       <div class="balance-bottom">
-          Raze ETH(=<span>{{razeBalance / 100}}</span>ETH)
+          Raze BNB(=<span>{{razeBalance / 100}}</span>BNB)
       </div>
     </li>
     <li class="balance-middle-eth">
       <div class="balance-top">
-        ETH Balance
+        BNB Balance
       </div>
       <div class="balance-middle">
         <div class="balance-value">
@@ -29,12 +29,12 @@
         </div>
       </div>
       <div class="balance-bottom">
-        ETH(=<span>{{mateMaskBalance}}</span>ETH)
+        BNB(=<span>{{mateMaskBalance}}</span>BNB)
       </div>
     </li>
     <li class="balance-middle-bli">
       <div class="balance-top">
-        Raze ETH Balance
+        Raze BNB Balance
       </div>
       <div class="balance-middle">
         <div class="balance-value">
@@ -42,7 +42,7 @@
         </div>
       </div>
       <div class="balance-bottom">
-        pETH &nbsp;&nbsp;ETH
+        rBNB &nbsp;&nbsp;BNB
       </div>
     </li>
   </ul>
@@ -61,6 +61,7 @@ export default {
       this.$store.dispatch('getBalance')
   },
   computed: mapState({
+    // 箭头函数可使代码更简练
     razeBalance: state => state.razeBalance ,
     mateMaskBalance: state =>state.mateMaskBalance,
     mateMaskBalanceUnit: state => Math.floor(state.mateMaskBalance * 100)

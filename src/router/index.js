@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 // import { hideLoading, showLoading } from '../loading'
-import razeApp from '../razeClient'
+import razeApp from '../razeClient';
 
 Vue.use(VueRouter)
 
@@ -33,17 +33,18 @@ const router = new VueRouter({
   routes
 })
 
-// Check the client state，
-// Invoke client.login
+// 校验客户端状态，
+// 调用client.login
 
 const AccountRouter = ['/']
 router.beforeEach(async (to, from, next) => {
-    // Check all the clients of razeApp
+    // 这里要把razeApp所有的client 都要校验一遍， 确保所有都client都没有 就跳转到首页
     if (!AccountRouter.includes(to.path) && !razeApp.razeClient) {
-        next('/')
+        Vue.prototype.$message("Please Init Your Client By Click On The Card Below!");
+        next('/');
         return 
     }
-    next()
+    next();
 })
 
 export default router

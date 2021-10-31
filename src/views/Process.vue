@@ -30,24 +30,28 @@ export default {
         {
           title: 'Swap',
           key: '/swap',
-          icon: `${require('../assets/icon/invalid-name.png')}`
+          icon: `${require('../assets/icon/invalid-name.png')}`,
+          type: 'router',
+          linkto: '/process',
         },
         {
           title: 'Bridge',
           key: '/bridge',
-          icon: `${require('../assets/icon/loading.png')}`
+          icon: `${require('../assets/icon/loading.png')}`,
+          type: 'link',
+          linkto: 'https://docs.raze.network/tutorial/testnet-configuration',
         },
         {
           title: 'Tutorial',
-          icon: `${require('../assets/icon/play.png')}`
+          icon: `${require('../assets/icon/play.png')}`,
+          type: 'link',
+          linkto: 'https://docs.raze.network/tutorial/testnet-configuration',
         },
         {
-          title: 'Q&A',
-          icon: `${require('../assets/icon/help.png')}`
-        },
-        {
-          title: 'Info',
-          icon: `${require('../assets/icon/prompt.png')}`
+          title: 'About',
+          icon: `${require('../assets/icon/help.png')}`,
+          type: 'link',
+          linkto: 'https://www.raze.network/',
         }
       ]
     };
@@ -77,7 +81,7 @@ export default {
 .process {
   display: flex;
   flex-wrap: wrap;
-  overflow: scroll;
+  overflow-y: auto;
   width: 100%;
   height: 100vh;
   background-image: linear-gradient(40deg, #1e0f51 48%, #4e1d69 100%);

@@ -16,21 +16,24 @@ export default {
       transationDataList: [
         {
           title: 'Mint',
-          description: 'Deposit ETH to pETH',
+          description: 'Deposit BNB to rBNB',
           icon: require('../assets/icon/5.png'),
-          tip: '0 Unit ETH = 0 ETH'
+          tip: '0 Unit BNB = 0 BNB',
+          needmax: false,
         },
         {
           title: 'Transfer',
           description: 'My Raze Account Address',
           icon: require('../assets/icon/6.png'),
-          address: true
+          address: true,
+          needmax: true,
         },
         {
           title: 'Redeem',
-          description: 'Redeem pETH to ETH',
+          description: 'Redeem rBNB to BNB',
           icon: require('../assets/icon/6.png'),
-          tip: 'You will receive 0 Unit ETH'
+          tip: 'You will receive 0 Unit BNB',
+          needmax: true,
         }
       ]
     };

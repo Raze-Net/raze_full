@@ -22,7 +22,7 @@ contract RazeBase {
     */
     uint256 public unit; 
 
-    uint256 public round_len = 36; 
+    uint256 public round_len = 24; 
     uint256 public round_base = 0; // 0 for block, 1 for second (usually just for test)
 
 

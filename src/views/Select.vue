@@ -1,9 +1,9 @@
 <template>
   <div class="home">
-    <!-- navigation bars -->
+    <!-- 导航栏 -->
     <header-nav class="nav"></header-nav>
 
-    <!-- middle character -->
+    <!-- 中间文字 -->
     <div class="content">
       <div class="front-text">
         Choose Which cryptocurrency you<br />
@@ -15,7 +15,7 @@
         class="btn"
       >
     </div>
-    <!-- bottom component -->
+    <!-- 底部组件 -->
     <div class="bottom-card">
       <card
         v-for="(card,index) in cardList"
@@ -43,27 +43,27 @@ export default {
     return {
       cardList: [
         {
-          icon: require('../assets/icon/eth.png'),
-          text: 'ETH',
-          content: 'Transfer ETH to pETH',
+          icon: require('../assets/icon/bnb.png'),
+          text: 'BNB',
+          content: 'Transfer BNB to rBNB',
           width: 100
         },
         {
           icon: require('../assets/icon/dai.png'),
           text: 'DAI',
-          content: 'Transfer DAI to pDAI',
+          content: 'Transfer DAI to rDAI',
           width: 200
         },
         {
           icon: require('../assets/icon/ustd.png'),
           text: 'USDT',
-          content: 'Transfer USDT to pUSDT',
+          content: 'Transfer USDT to rUSDT',
           width: 100
         },
         {
           icon: require('../assets/icon/raze.png'),
           text: 'Raze',
-          content: 'Transfer RAZE to pRAZE',
+          content: 'Transfer RAZE to rRAZE',
           width: 100
         }
       ]
@@ -97,7 +97,7 @@ export default {
   -webkit-backdrop-filter: blur(7px);
   backdrop-filter: blur(7px);
   background-color: rgba(29, 4, 73, 0.7);
-  /*enhance the fuzziness*/
+  /*为了模糊更明显，调高模糊度*/
   z-index: 3;
 }
 .content {

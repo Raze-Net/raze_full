@@ -2,12 +2,17 @@ import Vue from 'vue'
 import App from './App.vue'
 import Vuex from 'vuex'
 import router from './router'
-import { Message, Dialog, Loading } from 'element-ui';
+import { Message, Dialog, Loading, Dropdown, DropdownItem, DropdownMenu } from 'element-ui';
 import razeApp from './razeClient'
 import { showLoading, hideLoading} from './loading'
 Vue.use(Vuex)
 Vue.use(Dialog);
-Vue.use(Loading)
+Vue.use(Loading);
+Vue.use(Dropdown);
+Vue.use(DropdownItem);
+Vue.use(DropdownMenu);
+// Vue.use(MessageBox);
+
 // Vue.use(ElementUI)
 const store =  new Vuex.Store({
     state: {
@@ -49,7 +54,7 @@ const store =  new Vuex.Store({
                 await dispatch('getRazeBalance')
                 await dispatch('getMateMaskBalance')
             } catch (error) {
-                Message('something wrong')
+                Message('Something Went Wrong.')
                 console.error(error)
             }
             hideLoading()
@@ -58,23 +63,26 @@ const store =  new Vuex.Store({
 })
 
 
-razeApp.init().then( async function() {
-    showLoading('connect service...')
-    try {
-        let accounts = await razeApp.web3.eth.getAccounts();
-        const balance = await razeApp.web3.eth.getBalance(accounts[0])
-        console.log('banlance', balance) 
-        store.commit('setUser', accounts[0])
-    } catch (error) {
-        Message('something wrong')
-    }
-    hideLoading()
-    
-})
+const initRazeClient = () => {
+    razeApp.init().then( async function() {
+        showLoading('connect service...')
+        try {
+            let accounts = await razeApp.web3.eth.getAccounts();
+            const balance = await razeApp.web3.eth.getBalance(accounts[0])
+            console.log('banlance', balance) 
+            store.commit('setUser', accounts[0])
+        } catch (error) {
+            Message('Something Went Wrong.')
+        }
+        hideLoading()
+    })
+}
+initRazeClient();
 
 Vue.prototype.$raze = razeApp;
+Vue.prototype.initRazeClient = initRazeClient;
 
-// bnjs wendang；generate random characters. 
+// bnjs wendang；随机生成字符串
 // login yonghu xinxi 
 // Vue.component(Message.name, Message);
 Vue.prototype.$message = Message;

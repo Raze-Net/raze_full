@@ -1,5 +1,0 @@
-This private key is for the access of RAZE-pETH account.It cannot be used to access any other Raze account.
-fb8C80F8143E5baF936fc5c6E73bB07A0a247D10
-
-public:
-0x0d0492c0aaa064d2139fc6b30290f8566b0428ef9ed609e829c61fafda7f1d6607a9fd3ed4ce37500a05a1a57e76cf4718b91c25afc0ec8fde26fce6d15750d5

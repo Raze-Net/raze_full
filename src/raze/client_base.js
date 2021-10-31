@@ -45,7 +45,6 @@ class ClientBase {
         // So better use an alias to fix our reference to the Client object.
         // Reference: https://stackoverflow.com/questions/20279484/how-to-access-the-correct-this-inside-a-callback
         var that = this;
-
         that.service = new Service();
 
         that.gasLimit = 5470000; // 
@@ -53,7 +52,6 @@ class ClientBase {
         // Reference: https://github.com/ethereum/web3.js/issues/2666
         // This option is only available in web3 1.3.0, but not in 1.2.1
         // web3.transactionConfirmationBlocks = 1;
-
         that.round_base = await that.raze.methods.round_base().call();
         that.round_len = await that.raze.methods.round_len().call();
 
@@ -65,7 +63,6 @@ class ClientBase {
             that.roundUnitTime = 1000; // 1 second
         else
             throw new Error("Invalid round base.");
-
         // The amount of tokens represented by one unit.
         // Most of the time, one token is too small and it is not worthwhile to use private 
         // transaction for such small amount. Hence in Raze, we contrain all private operations 
@@ -433,7 +430,7 @@ class ClientBase {
             that.account.keypair = utils.createAccount();
             that.account.aesKey = aes.generateKey();
         } else {
-            that.account.keypair = utils.keyPairFromSecret(secret);
+            that.account.keypair = utils.keyPairFromSecret(secret); 
             that.account.aesKey = aes.generateKey(secret);
         }
         let isRegistered = await ClientBase.registered(that.raze, that.account.publicKeySerialized());
@@ -639,7 +636,7 @@ class ClientBase {
         that.checkValue();
 
         if (decoys === undefined)
-            decoys = ["0x2113416df38f399d17efbf8e819bce71edf4224c3394e77d9f656d59fdc07bb10d71e8c0553939a16566141cc62a0f0b0f33041e8863c84bca22387f072c7a6f", "0x1eef7bd48f5b4452ff84796cac1f705571b2615c289aee732215801efbf6ddf2248087742b36d1d5d56ac9a164c26dc64692d841a3b2fb07b2fc691ad5eb7195"];
+            decoys = ["0x2113416df38f399d17efbf8e819bce71edf4224c3394e77d9f656d59fdc07bb10d71e8c0553939a16566141cc62a0f0b0f33041e8863c84bca22387f072c7a6f", "0x1eef7bd48f5b4452ff84796cac1f705571b2615c289aee732215801efbf6ddf2248087742b36d1d5d56ac9a164c26dc64692d841a3b2fb07b2fc691ad5eb7195", "0x0b9789644e3e9934e1a8de7fee5da9b6211f16a11c52dd079f59e5056009f74406cada714b1bb11d0dace644f4175d85b7a67ab3367c2221ff11dbb86631f632", "0x0b3546acfd90f8c2a9e9d35fe53b9673ae2fc281dcdcfaeafd290b852f256b5b2fc6f54d2874ed5f8840a1a525ed401fa741f44040bdef1c16ba985e5a0a0267", "0x1e2d3366fd942f345178635e6340c7efae729eaa8b26544aa4350266771ba6f32581f7eae4a86dd8f82dd3eb57dba3d5ea26e6916a75d10e951d17f0c7da4023", "0x078b13d654c4e6549040879e387e1c66dabdaa58874c2d9f896af97235cadd0e1571413da3217f3212224a1e740d0349bcdc1cce9347e32de16b9ac9e90f56c6"];
         receiver = receiver.trim();
         decoys = decoys.map(decoy => decoy.trim());
         
@@ -705,8 +702,8 @@ class ClientBase {
 
         // Shuffle all participants
         var y = [account.publicKey()]
-            .concat([receiver])
-            .concat(decoys);
+            .concat([receiver]).concat([]);
+            // .concat(decoys);
         var index = [];
         var m = y.length;
         while (m != 0) {
@@ -778,7 +775,7 @@ class ClientBase {
         var gasPrice = await this.web3.eth.getGasPrice();
 
         if (transferGasLimit === undefined)
-            transferGasLimit = 5470000 + 500000 * decoys.length;
+            transferGasLimit = 5470000 + 400000 * decoys.length;
         var maxFeeValue = that.web3.utils.toBN(new BigNumber(transferGasLimit * gasPrice)).toString();
         let transaction = 
             that.raze.methods.transfer(C, D, serializedY, u, proof)

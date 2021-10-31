@@ -2,22 +2,26 @@
   <div class="select">
     <template v-if="!registerByself">
         <div class="description">
-        Please use our key generator or use a key that is as random as your Meramask wallet private key as the Raze account private key,and copy it on paper for safekeeping.
+        Please use our key generator or a key that is as random as your MetaMask wallet private key for the Raze Account Private Key. Copy it on a piece paper for safekeeping.
         <span>
-            Never share your private key with others.
+           Never share your private key with others.
         </span>
         </div>
         <div class="private">
-        This private key is for the access of RAZE-ETH account. It cannot be used to access any other Raze account.
+        This private key is for the access of RAZE-BNB account. It cannot be used to access any other Raze account.
         </div>
-        <div class="privite-btn" @click="generatorKey">
-        Privat Key Generator
+        <div class="privite-btn" @click="generatorKey" style="margin-top: 16px;">
+        Private Key Generator
         </div>
         <div class="or"> OR</div>
         <div class="own-btn" @click="registerByself=true">
             <span>
-                Pick your own key
+                Pick Your Own Key
             </span>
+        </div>
+        <div class="or"> OR</div>
+        <div class="privite-btn" @click="$router.push('/login')">
+            Login
         </div>
     </template>
     <RegisterItem v-else :generatorKey="generatorKey"></RegisterItem>
@@ -44,7 +48,9 @@ export default {
            try {
                await this.$raze.razeEthRegister(scret)
            } catch (error) {
-               this.$message('something wrong')
+                this.$message(error);
+                hideLoading();
+                return;
            }
            hideLoading()
            downloadScret(scret, this.type)
@@ -61,7 +67,7 @@ export default {
 
 <style lang="less" scoped>
 .description {
-  margin-top: 23px;
+  margin-top: 14px;
   font-family: Arial;
   font-size: 14px;
   font-weight: normal;
@@ -76,7 +82,7 @@ export default {
   }
 }
 .private {
-  margin-top: 15px;
+  margin-top: 8px;
   font-family: Arial;
   font-size: 14px;
   font-weight: normal;
@@ -89,14 +95,14 @@ export default {
 .privite-btn {
   width: 424px;
   height: 50px;
-  margin: 54px 6px 12px 0;
-  padding: 17px 129px 15px 135px;
+  margin: 0 6px 12px 0;
+  text-align: center;
+  line-height: 50px;
   font-family: Helvetica;
   font-size: 16px;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
-  line-height: 1;
   letter-spacing: normal;
   text-align: center;
   color: #fff;

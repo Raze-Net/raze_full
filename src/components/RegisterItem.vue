@@ -1,7 +1,7 @@
 <template>
   <form>
     <div class="privite-btn" @click="generatorKey">
-        or Privat Key Generator
+        or Private Key Generator
     </div>
     <div class="input">
       <input
@@ -51,12 +51,17 @@ export default {
               this.$message('Account length must be greater than 16')
               return
           }
+          if (!this.$raze.razeClient) {
+             this.$message("Your Local Client Connection Failed.Please Refresh The Page");
+             return
+          }
           showLoading('registering...')
           try {
               await this.$raze.razeEthRegister(this.account)
           } catch (error) {
-              this.$message('something wrong')
-              console.error(error)
+              this.$message(error);
+              hideLoading()
+              return;
           }
           hideLoading()
           downloadScret(this.account, this.type)

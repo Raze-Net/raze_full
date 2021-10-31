@@ -1,9 +1,9 @@
 <template>
   <div class="home">
-    <!-- navigation bars -->
+    <!-- 导航栏 -->
     <header-nav class="nav"></header-nav>
 
-    <!--  -->
+    <!-- 中间文字 -->
     <div>
       <div class="front-text">
         Choose Which cryptocurrency you<br />
@@ -15,12 +15,8 @@
     >
       <span>Check Tutorial </span>
     </div>
-      <!-- <p><button class="btn btn-primary" id="initETHButton" type="button">Init</button></p>
-              <p><button class="btn btn-primary" id="registerETHButton" type="button">Register</button></p>
-              <p><button class="btn btn-primary" id="depositETHButton" type="button">Deposit</button></p>
-              <p><button class="btn btn-primary" id="withdrawETHButton" type="button">Withdraw</button></p> -->
     </div>
-    <!-- Bottom component -->
+    <!-- 底部组件 -->
     <div class="bottom-card">
       <card
         v-for="(card,index) in cardList"
@@ -45,27 +41,27 @@ export default {
     return {
       cardList: [
         {
-          icon: require('../assets/icon/eth.png'),
-          text: 'ETH',
-          content: 'Transfer ETH to pETH',
+          icon: require('../assets/icon/bnb.png'),
+          text: 'BNB',
+          content: 'Transfer BNB to rBNB',
           width: 100
         },
         {
           icon: require('../assets/icon/dai.png'),
           text: 'DAI',
-          content: 'Transfer DAI to pDAI',
+          content: 'Transfer DAI to rDAI',
           width: 130
         },
         {
           icon: require('../assets/icon/ustd.png'),
           text: 'USDT',
-          content: 'Transfer USDT to pUSDT',
+          content: 'Transfer USDT to rUSDT',
           width: 100
         },
         {
           icon: require('../assets/icon/raze.png'),
           text: 'Raze',
-          content: 'Transfer RAZE to pRAZE',
+          content: 'Transfer RAZE to rRAZE',
           width: 100
         }
       ]
@@ -82,7 +78,7 @@ export default {
 <style lang="less" scoped>
 .home {
   height: 100vh;
-  overflow: scroll;
+  overflow-y: auto;
   background-color: #1c1e27;
   background-image: url('../assets/images/16.png');
   background-repeat: no-repeat;

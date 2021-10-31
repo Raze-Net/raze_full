@@ -12,8 +12,9 @@
         type="text"
         placeholder="0 Unit"
         v-model="value"
+        @input="filter"
       >
-      <div class="max-btn" @click="setMax">Max</div>
+      <div class="max-btn" @click="setMax" v-if="transactionData.needmax">Max</div>
       <img :src="transactionData.icon">
     </div>
     <div class="tip">{{tips}}</div>
@@ -42,7 +43,7 @@
     <div class="address-dialog">
         <ElDialog
             :visible.sync="addressDialogVisible"
-            width="400px"
+            width="500px"
             :modal="false"
             :modal-append-to-body="false"
             append-to-body
@@ -73,12 +74,12 @@
 
 <script>
 import { showLoading, hideLoading } from '../loading'
-import { Dialog } from 'element-ui'
+import { Dialog, MessageBox } from 'element-ui'
 import { mapState } from 'vuex'
 import Clipboard from 'clipboard'
 export default {
   props: {
-    transactionData: Object
+    transactionData: Object,
   },
   data: function() {
     return {
@@ -103,24 +104,47 @@ export default {
             switch(this.transactionData.title) {
               case 'Mint': {
                   await this.mint()
+                  this.value = null
+                  this.remoteAddress = ''
+                  this.$store.dispatch('getBalance')
                   break;
               }
               case 'Transfer': {
                   if (!this.remoteAddress) {
-                      this.$message({type: 'warning', message: 'need remote address'})
+                      this.$message({type: 'warning', message: 'Need Remote Address'})
                       return
                   }
-                  await this.Transfer()
+                  MessageBox.confirm('Are You Sure To Transfer?', 'Tips', {
+                      confirmButtonText: 'Confirm',
+                      cancelButtonText: 'Cancel',
+                      customClass: 'raze-messagebox'
+                  }).then(async () => {
+                      try {
+                        await this.Transfer()
+                        this.value = null
+                        this.remoteAddress = ''
+                        this.$store.dispatch('getBalance')
+                        this.$message({
+                            type: 'success',
+                            message: 'Success!'
+                        });
+                      } catch (error) {
+                          console.log('error')
+                      }
+                    }).catch(() => {
+                        return         
+                    });
                   break;
               }
               case 'Redeem': {
                   await this.Redeem()
+                  this.value = null
+                  this.remoteAddress = ''
+                  this.$store.dispatch('getBalance')
                   break;
               }
             }
-          this.value = null
-          this.remoteAddress = ''
-          this.$store.dispatch('getBalance')
+         
         } catch (error) {
             this.$message({
                 type: 'error',
@@ -131,12 +155,17 @@ export default {
       },
       async mint() {
         switch(this.$store.state.type) {
-          case 'ETH': {
+          case 'BNB': {
               showLoading('In execution...')
               try {
                   await this.$raze.razeEthDeposit(this.value)
               } catch (error) {
-                  this.$message('something wrong')
+                  if (error) {
+                     this.$message(error);
+                     hideLoading()
+                     return  
+                  }
+                  this.$message('Something Went Wrong.')
                   console.error(error)
               }
               hideLoading()
@@ -145,12 +174,17 @@ export default {
       },
       async Transfer() {
         switch(this.$store.state.type) {
-          case 'ETH': {
+          case 'BNB': {
               showLoading('In execution...')
               try {
                   await this.$raze.razeEthTransfer(this.remoteAddress, this.value)
               } catch (error) {
-                  this.$message('something wrong')
+                  if (error) {
+                     this.$message(error);
+                     hideLoading()
+                     return  
+                  }
+                  this.$message('Something Went Wrong.')
                   console.error(error)
               }
               hideLoading()
@@ -159,12 +193,17 @@ export default {
       },
       async Redeem() {
         switch(this.$store.state.type) {
-          case 'ETH': {
+          case 'BNB': {
               showLoading('In execution...')
               try {
                   await this.$raze.razeEthWithdraw(this.value)
               } catch (error) {
-                  this.$message('something wrong')
+                  if (error) {
+                     this.$message(error);
+                     hideLoading()
+                     return  
+                  }
+                  this.$message('Something Went Wrong.')
                   console.errror(error)
               }
               hideLoading()
@@ -180,13 +219,13 @@ export default {
       copy() {
           const clipboard = new Clipboard('.address-copy-btn')
           clipboard.on('success', () => {
-                this.$message('copy success')
-                // release the memory
+                this.$message('Copy Successful')
+                //  释放内存
                 clipboard.destroy()
           })
            clipboard.on('error', () => {
                 this.$message('The browser does not support replication')
-                //  release the memory
+                //  释放内存
                 clipboard.destroy()
           })
       },
@@ -213,20 +252,23 @@ export default {
       },
       setRazeMax() {
           this.value = this.$store.state.razeBalance
+      },
+      filter() {
+          this.value = this.value.replace(/[^\d]/g,'')
       }
   },
   computed: mapState({
-    
+    // 箭头函数可使代码更简练
     accountAddress: state => state.razeAddress ,
     tips() {
         switch(this.transactionData.title) {
             case 'Mint': {
-                return `${this.value} Unit ETH = ${Math.floor(this.value / 100)} ETH`
+                return `${this.value} Unit BNB = ${Math.floor(this.value / 100)} BNB`
             }
             case 'Transfer': 
                 return ''
             case 'Redeem': {
-                return `You will receive ${Math.floor(this.value / 100)} ETH`
+                return `You will receive ${Math.floor(this.value / 100)} BNB`
             }
                
         }
@@ -380,7 +422,7 @@ export default {
   }
   .address-textarea {
     width: calc(100% - 20px);
-    overflow: scroll;
+    overflow-y: auto;
     height: 44px;
     padding: 8px;
     outline: none;

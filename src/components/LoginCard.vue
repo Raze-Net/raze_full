@@ -5,7 +5,7 @@
   >
     <div class="login-content">
       <div class="title">
-        {{type==='select'?'register': 'Login'}}
+        {{type==='select' ? 'Register' : 'Login'}}
         <div class="subtitle">Your Raze Account</div>
         <img src="@/assets/icon/10.png">
       </div>
@@ -38,6 +38,10 @@ export default {
   },
   methods: {
       toRegister() {
+          if (!this.$raze.razeClient) {
+             this.$message("Your Local Client Connection Failed.Please Refresh The Page");
+             return
+          }
           this.$router.push('/select')
       }
   },
